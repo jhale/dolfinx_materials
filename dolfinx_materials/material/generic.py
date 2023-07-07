@@ -156,7 +156,8 @@ class MaterialStateManager:
 
     def get_internal_state_variable_index(self, name):
         index = self._behaviour.internal_state_variable_names.index(name)
-        pos = np.arange(index, index + self._behaviour.internal_state_variables[name])
+        pos = np.arange(
+            index, index + self._behaviour.internal_state_variables[name])
         return pos
 
     def __getitem__(self, i):

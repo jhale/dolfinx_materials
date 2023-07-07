@@ -51,7 +51,8 @@ class CustomNewtonProblem:
             self.b.scale(-1)
 
             # Compute b - J(u_D-u_(i-1))
-            apply_lifting(self.b, [self.a], [self.bcs], x0=[self.u.vector], scale=1)
+            apply_lifting(self.b, [self.a], [self.bcs],
+                          x0=[self.u.vector], scale=1)
             # Set dx|_bc = u_{i-1}-u_D
             set_bc(self.b, self.bcs, self.u.vector, 1.0)
             self.b.ghostUpdate(
@@ -104,7 +105,8 @@ class NonlinearMaterialProblem(NonlinearProblem):
         self.quadrature_map = qmap
 
     def form(self, x):
-        x.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+        x.ghostUpdate(addv=PETSc.InsertMode.INSERT,
+                      mode=PETSc.ScatterMode.FORWARD)
         with Timer("Constitutive update"):
             self.quadrature_map.update()
 
@@ -137,7 +139,8 @@ class NonlinearMaterialProblem(NonlinearProblem):
 class SNESNonlinearMaterialProblem(NonlinearMaterialProblem):
     def F(self, snes, x, F):
         """Assemble residual vector."""
-        x.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+        x.ghostUpdate(addv=PETSc.InsertMode.INSERT,
+                      mode=PETSc.ScatterMode.FORWARD)
         x.copy(self.u.vector)
 
         self.u.vector.ghostUpdate(
@@ -150,7 +153,8 @@ class SNESNonlinearMaterialProblem(NonlinearMaterialProblem):
             f_local.set(0.0)
         assemble_vector(F, self.L)
         apply_lifting(F, [self.a], bcs=[self.bcs], x0=[x], scale=-1.0)
-        F.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
+        F.ghostUpdate(addv=PETSc.InsertMode.ADD,
+                      mode=PETSc.ScatterMode.REVERSE)
         set_bc(F, self.bcs, x, -1.0)
 
     def J(self, snes, x, J, P):
@@ -216,7 +220,8 @@ class TAOProblem:
         """
 
         """Assemble residual vector."""
-        x.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+        x.ghostUpdate(addv=PETSc.InsertMode.INSERT,
+                      mode=PETSc.ScatterMode.FORWARD)
         x.copy(self.u.vector)
         self.u.vector.ghostUpdate(
             addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD
@@ -236,7 +241,8 @@ class TAOProblem:
         # We need to assign the vector to the function
 
         """Assemble residual vector."""
-        x.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+        x.ghostUpdate(addv=PETSc.InsertMode.INSERT,
+                      mode=PETSc.ScatterMode.FORWARD)
         x.copy(self.u.vector)
         self.u.vector.ghostUpdate(
             addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD
@@ -246,7 +252,8 @@ class TAOProblem:
             f_local.set(0.0)
         assemble_vector(F, self.L)
         apply_lifting(F, [self.a], bcs=[self.bcs], x0=[x], scale=-1.0)
-        F.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
+        F.ghostUpdate(addv=PETSc.InsertMode.ADD,
+                      mode=PETSc.ScatterMode.REVERSE)
         set_bc(F, self.bcs, x, -1.0)
 
     def J(self, tao: PETSc.TAO, x: PETSc.Vec, A: PETSc.Mat, P: PETSc.Mat):

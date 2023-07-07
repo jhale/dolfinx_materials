@@ -2,21 +2,20 @@
 Created on May 24, 2022
 @author: Ioannis Stefanou & Filippo Masi
 """
+from dolfinx.common import Timer
+import numpy as np  # manipulation of arrays
+import tensorflow as tf
 import os
 
 from dolfinx_materials.material import Material
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # INFO and WARNING messages are not printed
+# INFO and WARNING messages are not printed
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 # = '0' all messages are logged (default behavior)
 # = '1' INFO messages are not printed
 # = '3' INFO, WARNING, and ERROR messages are not printed
-import tensorflow as tf
 
 tf.keras.backend.set_floatx("float64")  # set tensorflow floating precision
-
-import numpy as np  # manipulation of arrays
-
-from dolfinx.common import Timer
 
 
 class TannMaterial(Material):
@@ -71,9 +70,11 @@ class TannMaterial(Material):
         Note: the material response is normalized.
         """
         with Timer("TANN_predict: expand"):
-            inputs = np.concatenate((svarsGP_t[:, : 12 + self.nb_isv], deGP), axis=1)
+            inputs = np.concatenate(
+                (svarsGP_t[:, : 12 + self.nb_isv], deGP), axis=1)
         with Timer("TANN_predict: infer"):
-            stressGP_t, svarsGP_t, dsdeGP_t = self.model(inputs, training=False)
+            stressGP_t, svarsGP_t, dsdeGP_t = self.model(
+                inputs, training=False)
         with Timer("TANN_predict: retype"):
             stressGP_t = stressGP_t.numpy()
             svarsGP_t = svarsGP_t.numpy()
@@ -81,7 +82,8 @@ class TannMaterial(Material):
         return stressGP_t, svarsGP_t, dsdeGP_t
 
     def usermatGP(
-        self, stressGP_t, deGP, svarsGP_t, dsdeGP_t, dt, GP_id, aux_deGP=np.zeros(1)
+        self, stressGP_t, deGP, svarsGP_t, dsdeGP_t, dt, GP_id, aux_deGP=np.zeros(
+            1)
     ):
         """
         User material at a Gauss point
@@ -134,7 +136,7 @@ class TannMaterial(Material):
         with Timer("TANN: return"):
             state["Strain"] = eps
             state["Stress"] = sig
-            state["ivars"] = state_vars[:, 12 : 12 + self.nb_isv]
+            state["ivars"] = state_vars[:, 12: 12 + self.nb_isv]
             state["free_energy"] = state_vars[:, [-2]]
             state["dissipation"] = state_vars[:, [-1]]
 

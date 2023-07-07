@@ -30,7 +30,8 @@ class QuadratureMap:
         else:
             self.num_cells = len(cells)
             self.cells = cells
-        self.dx = ufl.Measure("dx", domain=mesh, metadata={"quadrature_degree": deg})
+        self.dx = ufl.Measure("dx", domain=mesh, metadata={
+                              "quadrature_degree": deg})
         self.mesh_dim = self.mesh.geometry.dim
 
         self.degree = deg
@@ -66,13 +67,15 @@ class QuadratureMap:
         self.fluxes = {}
         for name, dim in self.material.fluxes.items():
             self.fluxes.update(
-                {name: create_quadrature_function(name, dim, self.mesh, self.degree)}
+                {name: create_quadrature_function(
+                    name, dim, self.mesh, self.degree)}
             )
 
         self.internal_state_variables = {}
         for name, dim in self.material.internal_state_variables.items():
             self.internal_state_variables.update(
-                {name: create_quadrature_function(name, dim, self.mesh, self.degree)}
+                {name: create_quadrature_function(
+                    name, dim, self.mesh, self.degree)}
             )
 
         self.external_state_variables = {}
@@ -80,9 +83,11 @@ class QuadratureMap:
         self.set_data_manager(self.cells)
 
         if self.material.rotation_matrix is not None:
-            Wrot = create_tensor_quadrature_space(self.mesh, self.degree, (3, 3))
+            Wrot = create_tensor_quadrature_space(
+                self.mesh, self.degree, (3, 3))
             self.rotation_func = fem.Function(Wrot)
-            self.eval_quadrature(self.material.rotation_matrix, self.rotation_func)
+            self.eval_quadrature(
+                self.material.rotation_matrix, self.rotation_func)
 
         self.update_material_properties()
 
@@ -184,8 +189,10 @@ class QuadratureMap:
 
     @property
     def quadrature_points(self):
-        basix_celltype = getattr(basix.CellType, self.mesh.topology.cell_type.name)
-        quadrature_points, weights = basix.make_quadrature(basix_celltype, self.degree)
+        basix_celltype = getattr(
+            basix.CellType, self.mesh.topology.cell_type.name)
+        quadrature_points, weights = basix.make_quadrature(
+            basix_celltype, self.degree)
         return quadrature_points
 
     def eval_quadrature(self, ufl_expr, fem_func):
@@ -210,8 +217,10 @@ class QuadratureMap:
         elif field_name in self.internal_state_variables:
             field = self.internal_state_variables[field_name]
         else:
-            raise ValueError("Can only initialize a flux or internal state variables.")
-        self.material.set_initial_state_dict({field_name: get_vals(field)[self.dofs]})
+            raise ValueError(
+                "Can only initialize a flux or internal state variables.")
+        self.material.set_initial_state_dict(
+            {field_name: get_vals(field)[self.dofs]})
 
     def reinitialize_state(self):
         state_flux = {
@@ -273,7 +282,7 @@ class QuadratureMap:
         buff = 0
         for name, dim in self.material.fluxes.items():
             flux = self.fluxes[name]
-            update_vals(flux, flux_vals[:, buff : buff + dim], self.cells)
+            update_vals(flux, flux_vals[:, buff: buff + dim], self.cells)
             buff += dim
 
     def advance(self):

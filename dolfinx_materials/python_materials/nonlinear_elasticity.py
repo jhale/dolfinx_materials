@@ -37,7 +37,8 @@ class RambergOsgood(Material):
 
             df_dsig_eq = (
                 1 / 3 / mu
-                + self.alpha * self.n * sig_eq ** (self.n - 1) / self.sig0**self.n
+                + self.alpha * self.n *
+                sig_eq ** (self.n - 1) / self.sig0**self.n
             )
             sig = 3 * kappa * eps_m + 2 * sig_eq / 3 * n_e
             dne_deps = 1 / eps_eq * (2 / 3.0 * K() - np.outer(n_e, n_e))

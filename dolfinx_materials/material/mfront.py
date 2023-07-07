@@ -116,9 +116,11 @@ class MFrontMaterial:
             bopts.tangent_operator = (
                 mgis_bv.FiniteStrainBehaviourOptionsTangentOperator.DPK1_DF
             )
-            self.behaviour = mgis_bv.load(bopts, self.path, self.name, self.hypothesis)
+            self.behaviour = mgis_bv.load(
+                bopts, self.path, self.name, self.hypothesis)
         else:
-            self.behaviour = mgis_bv.load(self.path, self.name, self.hypothesis)
+            self.behaviour = mgis_bv.load(
+                self.path, self.name, self.hypothesis)
 
     def set_data_manager(self, ngauss):
         # Setting the material data manager
@@ -283,14 +285,15 @@ class MFrontMaterial:
             if (
                 s in state
             ):  # test if in state so that we can update only a few state variables
-                self.data_manager.s0.gradients[:, buff : buff + block_shape] = state[s]
+                self.data_manager.s0.gradients[:,
+                                               buff: buff + block_shape] = state[s]
             buff += block_shape
         buff = 0
         for i, s in enumerate(self.flux_names):
             block_shape = self.flux_sizes[i]
             if s in state:
                 self.data_manager.s0.thermodynamic_forces[
-                    :, buff : buff + block_shape
+                    :, buff: buff + block_shape
                 ] = state[s]
             buff += block_shape
         buff = 0
@@ -298,7 +301,7 @@ class MFrontMaterial:
             block_shape = self.internal_state_variable_sizes[i]
             if s in state:
                 self.data_manager.s0.internal_state_variables[
-                    :, buff : buff + block_shape
+                    :, buff: buff + block_shape
                 ] = state[s]
             buff += block_shape
 
@@ -307,20 +310,21 @@ class MFrontMaterial:
         buff = 0
         for i, s in enumerate(self.gradient_names):
             block_shape = self.gradient_sizes[i]
-            state[s] = self.data_manager.s1.gradients[:, buff : buff + block_shape]
+            state[s] = self.data_manager.s1.gradients[:,
+                                                      buff: buff + block_shape]
             buff += block_shape
         buff = 0
         for i, s in enumerate(self.flux_names):
             block_shape = self.flux_sizes[i]
             state[s] = self.data_manager.s1.thermodynamic_forces[
-                :, buff : buff + block_shape
+                :, buff: buff + block_shape
             ]
             buff += block_shape
         buff = 0
         for i, s in enumerate(self.internal_state_variable_names):
             block_shape = self.internal_state_variable_sizes[i]
             state[s] = self.data_manager.s1.internal_state_variables[
-                :, buff : buff + block_shape
+                :, buff: buff + block_shape
             ]
             buff += block_shape
         return state
@@ -329,7 +333,9 @@ class MFrontMaterial:
         mgis_bv.rotateGradients(gradient_vals, self.behaviour, rotation_values)
 
     def rotate_fluxes(self, flux_vals, rotation_values):
-        mgis_bv.rotateThermodynamicForces(flux_vals, self.behaviour, rotation_values)
+        mgis_bv.rotateThermodynamicForces(
+            flux_vals, self.behaviour, rotation_values)
 
     def rotate_tangent_operator(self, Ct_vals, rotation_values):
-        mgis_bv.rotateTangentOperatorBlocks(Ct_vals, self.behaviour, rotation_values)
+        mgis_bv.rotateTangentOperatorBlocks(
+            Ct_vals, self.behaviour, rotation_values)

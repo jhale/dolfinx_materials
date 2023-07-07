@@ -18,7 +18,8 @@ class ElastoPlasticIsotropicHardening(Material):
     def internal_state_variables(self):
         return {"p": 1}
 
-    def constitutive_update_vectorized_backup(self, eps, state):  # vectorized version
+    # vectorized version
+    def constitutive_update_vectorized_backup(self, eps, state):
         batch_size = eps.shape[0]
 
         eps_old = state["Strain"]
@@ -95,7 +96,8 @@ class ElastoPlasticIsotropicHardening(Material):
         yield_criterion = sig_eq_el - sig_Y_old
         if yield_criterion > 0:
             dp = fsolve(
-                lambda dp: sig_eq_el - 3 * mu * dp - self.yield_stress(p_old + dp), 0.0
+                lambda dp: sig_eq_el - 3 * mu * dp -
+                self.yield_stress(p_old + dp), 0.0
             )
             # assert dp > 0, f"Wrong value for dp={dp}"
             n_el = s_el / sig_eq_el  # normal vector
@@ -104,7 +106,8 @@ class ElastoPlasticIsotropicHardening(Material):
             dR_dp = (sig_Y_new - sig_Y_old) / dp
             beta = 1 - sig_Y_new / sig_eq_el
             gamma = 3 * mu / (3 * mu + dR_dp)
-            D = 3 * mu * (gamma - beta) * np.outer(n_el, n_el) + 2 * mu * beta * K()
+            D = 3 * mu * (gamma - beta) * np.outer(n_el,
+                                                   n_el) + 2 * mu * beta * K()
             Ct = C - D
         else:
             dp = 0

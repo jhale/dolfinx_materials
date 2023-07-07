@@ -24,5 +24,6 @@ class LinearElasticIsotropic(Material):
 
 class PlaneStressLinearElasticIsotropic(LinearElasticIsotropic):
     def compute_C(self, E, nu):
-        C = E / (1 - nu**2) * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, 1 - nu]])
+        C = E / (1 - nu**2) * \
+            np.array([[1, nu, 0], [nu, 1, 0], [0, 0, 1 - nu]])
         return C

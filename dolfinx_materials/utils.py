@@ -290,7 +290,8 @@ def axi_grad(r, v):
         )
     elif ufl.shape(v) == (2,):
         return ufl.as_matrix(
-            [[v[0].dx(0), v[0].dx(1), 0], [v[1].dx(0), v[1].dx(1), 0], [0, 0, v[0] / r]]
+            [[v[0].dx(0), v[0].dx(1), 0], [v[1].dx(0),
+                                           v[1].dx(1), 0], [0, 0, v[0] / r]]
         )
     elif ufl.shape(v) == ():
         return ufl.as_vector([v.dx(0), 0, v.dx(1)])
