@@ -1,14 +1,14 @@
-import numpy as np
-import ufl
-from petsc4py import PETSc
-from mpi4py import MPI
-from dolfinx import fem, mesh, io
 import matplotlib.pyplot as plt
-
+import numpy as np
 from dolfinx_materials.quadrature_map import QuadratureMap
-
 from dolfinx_materials.solvers import NonlinearMaterialProblem
+
+import ufl
+from dolfinx import fem, io, mesh
 from dolfinx.cpp.nls.petsc import NewtonSolver
+
+from mpi4py import MPI
+from petsc4py import PETSc
 
 
 def uniaxial_tension_2D(material, Exx, N=1, order=1, save_fields=None):

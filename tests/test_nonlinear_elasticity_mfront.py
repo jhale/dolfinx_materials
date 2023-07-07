@@ -1,8 +1,7 @@
-import numpy as np
 import os
 
+import numpy as np
 from dolfinx_materials.material.mfront import MFrontMaterial
-
 
 os.path.join(os.path.abspath(__file__))
 from uniaxial_tension import uniaxial_tension_2D

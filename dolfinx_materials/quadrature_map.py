@@ -1,21 +1,18 @@
-import ufl
-import basix
 import numpy as np
+
+import basix
+import ufl
 from dolfinx import fem
-from .utils import (
-    project,
-    get_function_space_type,
-    create_quadrature_space,
-    create_vector_quadrature_space,
-    create_tensor_quadrature_space,
-    to_mat,
-    get_vals,
-    update_vals,
-)
 from dolfinx.common import Timer
-from .material import Material
-from .quadrature_function import create_quadrature_function, QuadratureExpression
+
 from mpi4py import MPI
+
+from .material import Material
+from .quadrature_function import (QuadratureExpression,
+                                  create_quadrature_function)
+from .utils import (create_quadrature_space, create_tensor_quadrature_space,
+                    create_vector_quadrature_space, get_function_space_type,
+                    get_vals, project, to_mat, update_vals)
 
 
 def mpi_print(s):

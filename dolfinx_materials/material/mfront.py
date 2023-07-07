@@ -7,14 +7,14 @@ MFrontNonlinearMaterial class
 Laboratoire Navier (ENPC,IFSTTAR,CNRS UMR 8205)
 @email: jeremy.bleyer@enpc.f
 """
-import mgis.behaviour as mgis_bv
-import numpy as np
-
+import os
 # from .gradient_flux import Var
 # from .utils import compute_on_quadrature
 # import dolfin
 import subprocess
-import os
+
+import mgis.behaviour as mgis_bv
+import numpy as np
 
 
 # we filter out brackets from MFront variable names as it messes up with FFCx

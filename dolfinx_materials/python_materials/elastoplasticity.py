@@ -1,8 +1,9 @@
 import numpy as np
-from .elasticity import LinearElasticIsotropic
 from dolfinx_materials.material import Material
-from .tensors import Identity, K, vectorized_outer, expand_size
-from scipy.optimize import root, fsolve
+from scipy.optimize import fsolve, root
+
+from .elasticity import LinearElasticIsotropic
+from .tensors import Identity, K, expand_size, vectorized_outer
 
 # import jax.numpy as jnp
 # from jax import jit

@@ -1,10 +1,11 @@
-from dolfin import *
-import ufl
+import matplotlib.pyplot as plt
 import mgis.fenics as mf
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.spatial.transform import Rotation
+from dolfin import *
 from gradam import *
+from scipy.spatial.transform import Rotation
+
+import ufl
 
 behaviours = [
               "FCCMericCailletaudSingleCrystalViscoPlasticity",

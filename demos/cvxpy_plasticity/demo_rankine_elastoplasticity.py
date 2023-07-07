@@ -1,18 +1,17 @@
-import numpy as np
-from dolfinx_materials.python_materials.elasticity import (
-    PlaneStressLinearElasticIsotropic,
-)
-from rankine import Rankine
-import ufl
-from petsc4py import PETSc
-from mpi4py import MPI
-from dolfinx import fem, mesh, io
 import matplotlib.pyplot as plt
-
+import numpy as np
+from dolfinx_materials.python_materials.elasticity import \
+    PlaneStressLinearElasticIsotropic
 from dolfinx_materials.quadrature_map import QuadratureMap
-
 from dolfinx_materials.solvers import NonlinearMaterialProblem
+from rankine import Rankine
+
+import ufl
+from dolfinx import fem, io, mesh
 from dolfinx.cpp.nls.petsc import NewtonSolver
+
+from mpi4py import MPI
+from petsc4py import PETSc
 
 E, nu = 70e3, 0.0
 fc, ft = 30.0, 30.0

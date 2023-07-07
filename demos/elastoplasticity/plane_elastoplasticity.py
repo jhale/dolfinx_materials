@@ -1,16 +1,17 @@
+import matplotlib.pyplot as plt
 import numpy as np
-from mpi4py import MPI
-import ufl
-from dolfinx import mesh, io, fem
-from dolfinx.cpp.nls.petsc import NewtonSolver
-from dolfinx.common import list_timings, TimingType
+from dolfinx_materials.python_materials import (
+    ElastoPlasticIsotropicHardening, LinearElasticIsotropic)
 from dolfinx_materials.quadrature_map import QuadratureMap
 from dolfinx_materials.solvers import NonlinearMaterialProblem
-from dolfinx_materials.python_materials import (
-    ElastoPlasticIsotropicHardening,
-    LinearElasticIsotropic,
-)
 from generate_mesh import generate_perforated_plate
+
+import ufl
+from dolfinx import fem, io, mesh
+from dolfinx.common import TimingType, list_timings
+from dolfinx.cpp.nls.petsc import NewtonSolver
+
+from mpi4py import MPI
 
 hypothesis = "plane_strain"
 # hypothesis = "plane_stress"
@@ -157,7 +158,6 @@ for i, eyy in enumerate(Eyy[1:]):
 
 list_timings(domain.comm, [TimingType.wall, TimingType.user])
 
-import matplotlib.pyplot as plt
 
 plt.figure()
 plt.plot(Eyy, Syy, "-o")

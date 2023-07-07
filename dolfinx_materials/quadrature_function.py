@@ -6,17 +6,15 @@ QuadratureFunction class and utility functions
 @Author  :   Jeremy Bleyer, Ecole des Ponts ParisTech, Navier
 @Contact :   jeremy.bleyer@enpc.fr
 @Time    :   17/05/2023
-""" 
-import ufl
+"""
 import numpy as np
+
+import ufl
 from dolfinx import fem
 from dolfinx.common import Timer
-from .utils import (
-    project,
-    get_function_space_type,
-    create_quadrature_space,
-    cell_to_dofs,
-)
+
+from .utils import (cell_to_dofs, create_quadrature_space,
+                    get_function_space_type, project)
 
 
 def create_quadrature_function(name, shape, mesh, quadrature_degree):
@@ -26,7 +24,8 @@ def create_quadrature_function(name, shape, mesh, quadrature_degree):
         type = "vector"
     elif len(shape) == 2:
         type = "tensor"
-    function_space = create_quadrature_space(mesh, quadrature_degree, type, shape)
+    function_space = create_quadrature_space(
+        mesh, quadrature_degree, type, shape)
     return fem.Function(function_space, name=name)
 
 
@@ -35,7 +34,8 @@ class QuadratureExpression:
         self.ufl_shape = expression.ufl_expression.ufl_shape
         self.name = name
         self.expression = expression
-        self.type, self.shape = get_function_space_type(expression.ufl_expression)
+        self.type, self.shape = get_function_space_type(
+            expression.ufl_expression)
         self.initialize_function(mesh, quadrature_degree)
 
     def initialize_function(self, mesh, quadrature_degree):

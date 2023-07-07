@@ -1,7 +1,8 @@
 import numpy as np
-from .tensors import Identity, K, J
-from scipy.optimize import fsolve
 from dolfinx_materials.material import Material
+from scipy.optimize import fsolve
+
+from .tensors import Identity, J, K
 
 
 class RambergOsgood(Material):

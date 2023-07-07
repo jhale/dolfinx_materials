@@ -2,8 +2,9 @@
 Created on May 24, 2022
 @author: Ioannis Stefanou & Filippo Masi
 """
-from dolfinx_materials.material import Material
 import os
+
+from dolfinx_materials.material import Material
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # INFO and WARNING messages are not printed
 # = '0' all messages are logged (default behavior)
@@ -14,6 +15,7 @@ import tensorflow as tf
 tf.keras.backend.set_floatx("float64")  # set tensorflow floating precision
 
 import numpy as np  # manipulation of arrays
+
 from dolfinx.common import Timer
 
 

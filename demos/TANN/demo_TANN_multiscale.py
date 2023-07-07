@@ -1,12 +1,14 @@
 import numpy as np
-import ufl
-from mpi4py import MPI
-from dolfinx import fem, mesh, io
-from dolfinx.cpp.nls.petsc import NewtonSolver
 from dolfinx_materials.material import TannMaterial
-from dolfinx_materials.utils import symmetric_tensor_to_vector
-from dolfinx_materials.solvers import NonlinearMaterialProblem
 from dolfinx_materials.quadrature_map import QuadratureMap
+from dolfinx_materials.solvers import NonlinearMaterialProblem
+from dolfinx_materials.utils import symmetric_tensor_to_vector
+
+import ufl
+from dolfinx import fem, io, mesh
+from dolfinx.cpp.nls.petsc import NewtonSolver
+
+from mpi4py import MPI
 
 L = 3.0
 N = 8

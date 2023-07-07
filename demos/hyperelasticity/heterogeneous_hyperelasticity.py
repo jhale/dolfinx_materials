@@ -1,18 +1,18 @@
 import numpy as np
+from dolfinx_materials.material.mfront import MFrontMaterial
+from dolfinx_materials.quadrature_map import QuadratureMap
+from dolfinx_materials.solvers import NonlinearMaterialProblem
+from dolfinx_materials.utils import (nonsymmetric_tensor_to_vector,
+                                     symmetric_tensor_to_vector)
+
 import ufl
+from dolfinx import fem, io, la, log, mesh
+from dolfinx.common import TimingType, list_timings
+from dolfinx.cpp.nls.petsc import NewtonSolver
+
+from mpi4py import MPI
 from petsc4py import PETSc
 from petsc4py.PETSc import ScalarType
-from mpi4py import MPI
-from dolfinx import fem, mesh, io, la, log
-from dolfinx.common import list_timings, TimingType
-from dolfinx.cpp.nls.petsc import NewtonSolver
-from dolfinx_materials.quadrature_map import QuadratureMap
-from dolfinx_materials.material.mfront import MFrontMaterial
-from dolfinx_materials.solvers import NonlinearMaterialProblem
-from dolfinx_materials.utils import (
-    symmetric_tensor_to_vector,
-    nonsymmetric_tensor_to_vector,
-)
 
 Nx, order = 20, 1
 domain = mesh.create_unit_cube(

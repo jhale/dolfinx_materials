@@ -1,16 +1,13 @@
-from ufl import TrialFunction, derivative
-from dolfinx.fem import form, apply_lifting, set_bc, Function
-from dolfinx.fem.petsc import (
-    assemble_vector,
-    assemble_matrix,
-    create_matrix,
-    create_vector,
-    NonlinearProblem,
-)
-from petsc4py import PETSc
-from dolfinx.common import Timer
 import numpy as np
+
+from dolfinx.common import Timer
+from dolfinx.fem import Function, apply_lifting, form, set_bc
+from dolfinx.fem.petsc import (NonlinearProblem, assemble_matrix,
+                               assemble_vector, create_matrix, create_vector)
+from ufl import TrialFunction, derivative
+
 from mpi4py import MPI
+from petsc4py import PETSc
 
 
 def mpiprint(s):

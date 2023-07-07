@@ -1,6 +1,6 @@
-from dolfinx_materials.material import Material
 import cvxpy as cp
 import numpy as np
+from dolfinx_materials.material import Material
 
 
 class Rankine(Material):

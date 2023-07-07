@@ -7,12 +7,15 @@ Utility functions.
 @Contact :   jeremy.bleyer@enpc.fr
 @Time    :   15/05/2023
 """
-from dolfinx import fem
-import ufl
-from petsc4py import PETSc
-import numpy as np
-from dolfinx.common import Timer
 from functools import lru_cache
+
+import numpy as np
+
+import ufl
+from dolfinx import fem
+from dolfinx.common import Timer
+
+from petsc4py import PETSc
 
 
 # The function performs a manual projection of an original_field function onto a target_field space

@@ -1,9 +1,11 @@
-import numpy as np
 import gmsh
-from mpi4py import MPI
+import numpy as np
+
 import dolfinx
 from dolfinx.io import XDMFFile
 from dolfinx.io.gmshio import model_to_mesh
+
+from mpi4py import MPI
 
 
 def generate_perforated_plate(W, H, R, mesh_size):

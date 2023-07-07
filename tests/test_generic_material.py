@@ -1,9 +1,7 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from dolfinx_materials.python_materials import (
-    ElastoPlasticIsotropicHardening,
-    LinearElasticIsotropic,
-)
-import matplotlib.pyplot as plt
+    ElastoPlasticIsotropicHardening, LinearElasticIsotropic)
 
 
 def test_elastoplastic():
